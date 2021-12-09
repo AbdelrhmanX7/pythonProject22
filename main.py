@@ -8,16 +8,12 @@ import playsound
 import speech_recognition as sr
 from gtts import gTTS
 import translate
-from pathlib import Path
-import youtube_dl
 from tkinter import *
 import keyboard
 
 lan = "ar-EG"
 sp = "en"
 index = 0
-sw = 0
-downloads_path = str(Path.home() / "Downloads")
 
 
 def speak(text):
