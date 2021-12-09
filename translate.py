@@ -2,8 +2,9 @@ from __future__ import unicode_literals
 import youtube_dl
 get_data = ""
 serch_keyword = ""
-def From_Arabic_To_Franco(letters=""):
 
+def From_Arabic_To_Franco(letters=""):
+    letters = letters.replace("ا", "a")
     letters = letters.replace("ا", "a")
     letters = letters.replace("ة", "a")
     letters = letters.replace("ب", "b")
@@ -55,6 +56,7 @@ def Change_Word(text=""):
     text = text.replace("arsynyk", "Arsenik")
     text = text.replace("arsynk", "Arsenik")
     text = text.replace("arslk", "Arsenik")
+    text = text.replace("arsnk", "Arsenik")
     text = text.replace("bs_toth", "batistuta")
     text = text.replace("batystota", "batistuta")
     text = text.replace("bs_tota", "batistuta")
@@ -66,6 +68,7 @@ def Change_Word(text=""):
     text = text.replace("lyga_fy", "Lege-Cy")
     text = text.replace("lygy-sy", "Lege-Cy")
     text = text.replace("lyga", "Lege-Cy")
+    text = text.replace("ly_gay", "Lege-Cy")
     text = text.replace("6byb", "tabeeb")
     text = text.replace("bytadyn", "betadine")
     text = text.replace("mroan_bablo", "MARWAN_PABLO")

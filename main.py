@@ -122,8 +122,6 @@ while True:
                 player.set_media(Media)
                 player.play()
                 index = index + 1
-                sw = 0
-                print(sw)
                 # root = Tk()
                 # Label(root, text=f'SERVER ---> YOUR SONG NAME:{search_keyword}', font=("Helvetica 20 bold")).pack()
                 # root.after(2000, lambda: root.destroy())
@@ -136,13 +134,9 @@ while True:
             elif test == "وقف":
                 print("SERVER ---> PAUSE")
                 player.pause()
-                sw = 1
-                print(sw)
             elif test == "شغل":
                 print("SERVER ---> RESUME")
                 player.play()
-                sw = 0
-                print(sw)
             elif test == "اعاده":
                 print("SERVER ---> REPEAT")
                 player.stop()
@@ -156,3 +150,9 @@ while True:
                 print("SERVER --->HI BRO<--- SERVER")
                 speak("Hello, you are now using ENGLISH")
                 lan = "En"
+
+
+    # try:
+    #     print(player.is_playing())
+    # except:
+    #     continue
