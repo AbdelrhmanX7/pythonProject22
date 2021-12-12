@@ -1,7 +1,10 @@
 from __future__ import unicode_literals
 import youtube_dl
+
+
 get_data = ""
 serch_keyword = ""
+
 
 def From_Arabic_To_Franco(letters=""):
     letters = letters.replace("ا", "a")
@@ -52,11 +55,13 @@ def From_Arabic_To_Franco(letters=""):
 def Change_Word(text=""):
     text = text.replace("abyosf", "abyusif")
     text = text.replace("abo_yosf", "abyusif")
+    text = text.replace("qbl_yosf", "abyusif")
     text = text.replace("3rd_snk", "Arsenik")
     text = text.replace("arsynyk", "Arsenik")
     text = text.replace("arsynk", "Arsenik")
     text = text.replace("arslk", "Arsenik")
     text = text.replace("arsnk", "Arsenik")
+    text = text.replace("3ynyk", "Arsenik")
     text = text.replace("bs_toth", "batistuta")
     text = text.replace("batystota", "batistuta")
     text = text.replace("bs_tota", "batistuta")
@@ -72,18 +77,30 @@ def Change_Word(text=""):
     text = text.replace("6byb", "tabeeb")
     text = text.replace("bytadyn", "betadine")
     text = text.replace("mroan_bablo", "MARWAN_PABLO")
+    text = text.replace("mram_mosy", "marwan_moussa")
+    text = text.replace("ma_rmoshh", "marwan_moussa")
+    text = text.replace("mroan_mosy", "marwan_moussa")
+    text = text.replace("rndr", "Randar")
+    text = text.replace("shms", "Shams")
+    text = text.replace("alnzr", "Nazar")
+    text = text.replace("onzr", "Nazar")
     text = text.replace("dyazy_to_skyny", "DIZZYTOOSKINNY")
     text = text.replace("dy_syto_skyny", "DIZZYTOOSKINNY")
     text = text.replace("dy_fy_toskanyny", "DIZZYTOOSKINNY")
     text = text.replace("dy_fy_to_skyny", "DIZZYTOOSKINNY")
     text = text.replace("dy_fy_tmskyny", "DIZZYTOOSKINNY")
     text = text.replace("dy_to_skyny", "DIZZYTOOSKINNY")
+    text = text.replace("dy_fyto_skyny", "DIZZYTOOSKINNY")
+    text = text.replace("askyny", "DIZZYTOOSKINNY")
+    text = text.replace("skyny", "DIZZYTOOSKINNY")
     global serch_keyword
     serch_keyword = text
     print()
-def Download(url=""):
+def Download(url="",youtube_name=""):
+
     ydl_opts = {
         'format': 'bestaudio/best',
+        'outtmpl': f'{youtube_name}.mp3',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
@@ -92,3 +109,4 @@ def Download(url=""):
     }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
+

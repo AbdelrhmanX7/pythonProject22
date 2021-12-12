@@ -12,8 +12,11 @@ from tkinter import *
 import keyboard
 
 lan = "ar-EG"
-sp = "en"
+sp = "ar"
 index = 0
+f = open("Donwload_Song.txt",'r+')
+flag = 0
+lines = 0
 
 
 def speak(text):
@@ -49,19 +52,32 @@ while True:
             print("Hello, you are now using ENGLISH")
             if test.__contains__("open"):
                 print(index)
+
                 if index >= 1:
                     print("SERVER ---> STOP SONG")
                     player.stop()
                 test = test.replace("open ", "")
                 test = test.replace(" ", "_")
-                search_keyword = test
-                print(search_keyword)
-                html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + search_keyword)
-                video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
-                link = "https://www.youtube.com/watch?v=" + video_ids[0]
-                video = pafy.new(link)
-                best = video.getbestaudio()
-                play_url = best.url
+                translate.From_Arabic_To_Franco(letters=test)
+                search_keyword = translate.get_data
+                translate.Change_Word(text=search_keyword)
+                search_keyword = translate.serch_keyword
+                print(f"search_keyword = {search_keyword}")
+                for line in f:
+                    index += 1
+                    if search_keyword in line:
+                        flag = 1
+                        break
+                if flag == 0:
+                    html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + search_keyword)
+                    video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
+                    link = "https://www.youtube.com/watch?v=" + video_ids[0]
+                    video = pafy.new(link)
+                    best = video.getbestaudio()
+                    play_url = best.url
+                else:
+                    play_url = f"{search_keyword} + .mp3"
+                    print("SERVER ---> NO_INTERNET")
                 Instance = vlc.Instance()
                 player = Instance.media_player_new()
                 Media = Instance.media_new(play_url)
@@ -85,7 +101,11 @@ while True:
                 player.stop()
                 player.play()
             elif test == "download":
-                translate.Download(link)
+                translate.Download(link, search_keyword)
+                f.write(search_keyword + "\n")
+                with open('Donwload_Song.txt', 'a') as f:
+                    f.writelines(search_keyword + "\n")
+                print("SERVER ---> FILE DOWNLOAD")
             elif test == "Arabic":
                 sp = "ar"
                 print("SERVER ---> LANGUAGE CHANGE")
@@ -109,12 +129,21 @@ while True:
                 translate.Change_Word(text=search_keyword)
                 search_keyword = translate.serch_keyword
                 print(f"search_keyword = {search_keyword}")
-                html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + search_keyword)
-                video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
-                link = "https://www.youtube.com/watch?v=" + video_ids[0]
-                video = pafy.new(link)
-                best = video.getbestaudio()
-                play_url = best.url
+                for line in f:
+                    index += 1
+                    if search_keyword in line:
+                        flag = 1
+                        break
+                if flag == 0:
+                    html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + search_keyword)
+                    video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
+                    link = "https://www.youtube.com/watch?v=" + video_ids[0]
+                    video = pafy.new(link)
+                    best = video.getbestaudio()
+                    play_url = best.url
+                else:
+                    play_url = f"{search_keyword} + .mp3"
+                    print("SERVER ---> NO_INTERNET")
                 Instance = vlc.Instance()
                 player = Instance.media_player_new()
                 Media = Instance.media_new(play_url)
@@ -122,12 +151,8 @@ while True:
                 player.set_media(Media)
                 player.play()
                 index = index + 1
-                # root = Tk()
-                # Label(root, text=f'SERVER ---> YOUR SONG NAME:{search_keyword}', font=("Helvetica 20 bold")).pack()
-                # root.after(2000, lambda: root.destroy())
-                # root.call('wm', 'attributes', '.', '-topmost', '1')
-                # root.mainloop()
                 print("SERVER ---> YOUR SONG IS START")
+                speak("اغنيتك هتشتغل دلوقتي")
             elif test == "اقفل":
                 print("SERVER ---> EXIT")
                 player.stop()
@@ -142,7 +167,11 @@ while True:
                 player.stop()
                 player.play()
             elif test == "تحميل":
-                translate.Download(link)
+                translate.Download(link,search_keyword)
+                f.write(search_keyword + "\n")
+                with open('Donwload_Song.txt', 'a') as f:
+                    f.writelines(search_keyword + "\n")
+                print("SERVER ---> FILE DOWNLOAD")
             elif test == "انجليزي":
                 sp = "en"
                 print("SERVER ---> LANGUAGE CHANGE")
@@ -150,9 +179,3 @@ while True:
                 print("SERVER --->HI BRO<--- SERVER")
                 speak("Hello, you are now using ENGLISH")
                 lan = "En"
-
-
-    # try:
-    #     print(player.is_playing())
-    # except:
-    #     continue
